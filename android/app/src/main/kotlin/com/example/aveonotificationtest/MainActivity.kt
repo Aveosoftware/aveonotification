@@ -1,0 +1,6 @@
+package com.example.aveonotificationtest
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}

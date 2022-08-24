@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "aveonotificationtest",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "aveonotificationtest (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "aveonotificationtest (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "aveonotification",
+            "cwd": "aveonotification",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "aveonotification (profile mode)",
+            "cwd": "aveonotification",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "aveonotification (release mode)",
+            "cwd": "aveonotification",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
