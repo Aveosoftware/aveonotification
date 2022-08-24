@@ -1,21 +1,22 @@
 part of aveonotification;
 
-Future<void> backgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
-  print(message.notification!.title);
-}
-
 class FcmNotification {
   FcmNotification._instance();
   static FcmNotification get instance => FcmNotification._instance();
 
-  factory FcmNotification({required String serverKey}) {
+  factory FcmNotification(
+      {required String serverKey,
+      required Future<void> Function(RemoteMessage remoteMessage)
+          backgroundHandler,
+      Function(RemoteMessage? remoteMessage)? getIntial,
+      Function(RemoteMessage? remotem)? onMessage,
+      Function(RemoteMessage? remotem)? onMessageOpenedApp}) {
     LocalNotificationService.initialize();
     D2DNotification(serverKey: serverKey);
-    FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-    instance._getInitailmsg();
+    instance.getInitailmsg(getIntial);
     instance._onMsgListen();
-    instance._onMessageOpenedApp();
+    instance._backgroundMessageHandler(backgroundHandler);
+    instance._onMessageOpenedApp(onMessageOpenedApp);
     FirebaseMessaging.instance
         .getToken()
         .then((value) => print('token---------' + value!));
@@ -41,8 +42,15 @@ class FcmNotification {
     return response;
   }
 
-  _getInitailmsg() {
-    FirebaseMessaging.instance.getInitialMessage();
+  getInitailmsg(Function(RemoteMessage? remotem)? getIntial) {
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then(getIntial ?? (remotem) {});
+  }
+
+  _backgroundMessageHandler(
+      Future<void> Function(RemoteMessage remoteMessage) backgroundHandler) {
+    FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   }
 
   _onMsgListen() {
@@ -51,7 +59,7 @@ class FcmNotification {
     });
   }
 
-  _onMessageOpenedApp() {
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {});
+  _onMessageOpenedApp(Function(RemoteMessage? remotem)? onMessageOpenedApp) {
+    FirebaseMessaging.onMessageOpenedApp.listen(onMessageOpenedApp);
   }
 }

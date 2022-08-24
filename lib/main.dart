@@ -5,6 +5,12 @@ import 'package:aveonotification/aveonotification.dart';
 import 'package:aveonotificationtest/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +19,10 @@ void main() async {
   );
   runApp(const MyApp());
   FcmNotification(
+      backgroundHandler: backgroundHandler,
+      onMessageOpenedApp: (remotem) {
+        print('notificationMessage ===== ${remotem!.messageType}');
+      },
       serverKey:
           'AAAAxywvjj8:APA91bHwkjy9JabmTxHVx9fx6n_oqrIBGVweEQALNeg6mUFHj-kPsrgicOjpAYnVqjrbKLJ96ywpvByVijr_eDX6zVXhN-U0NR3AKmcw3q1nBEDaAsuTE3lGMx4TCLouWQAZ5hSdP-zq');
 }
@@ -48,23 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  void startTimer() {
-    Stream<int> stream =
-        Stream.periodic(Duration(seconds: 1), (t) => t + 1).take(10);
-    stream.listen((event) {
-      print('object-------' + event.toString());
-    });
-    Timer.periodic(const Duration(seconds: 1), (t) {
-      counter = t.tick;
-      if (t.tick == 10) {
-        startTimer();
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    startTimer();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

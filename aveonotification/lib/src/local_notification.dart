@@ -15,7 +15,8 @@ class LocalNotificationService {
 
     notificationsPlugin.initialize(
       initializationSettings,
-      // onSelectNotification: redirectToProfile,
+      // onSelectNotification:
+      // ,
     );
   }
 
