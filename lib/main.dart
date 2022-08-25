@@ -18,7 +18,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
-  FcmNotification(
+  FcmNotification.instance.unSubscribeD2dNotification('hello');
+  FcmNotification.init(
       backgroundHandler: backgroundHandler,
       onMessageOpenedApp: (remotem) {
         print('notificationMessage ===== ${remotem!.messageType}');
@@ -55,6 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int counter = 0;
 
   void _incrementCounter() {
+    FcmNotification.instance
+        .sendD2DNotification(to: 'hello', title: 'hello', body: 'hello');
     setState(() {});
   }
 

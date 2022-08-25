@@ -1,5 +1,6 @@
 part of aveonotification;
 
+///this class is used to show local notitfication on device
 class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -37,6 +38,7 @@ class LocalNotificationService {
   //   }
   // }
 
+  /// this method invokes notification on device
   static void createanddisplaynotification(RemoteMessage message) async {
     try {
       print(message);
@@ -56,7 +58,7 @@ class LocalNotificationService {
         notificationDetails,
       );
     } on Exception catch (e) {
-      print(e);
+      rethrow;
     }
   }
 }
