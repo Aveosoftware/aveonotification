@@ -11,29 +11,124 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# AveoNotification
+
+AveoNotification package simplifys the receving FCM push notification and sending notification to a topic
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+:>  recevies notifications  from firebase
+
+:>  subscribe to topic for notification
+
+:>  send notification to a topic
+
+:>  unsubscribe from a topic
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+### Requirements
+
+* before yousing this package you need to create a firebase project
+
+ * then go to Project Setting/Cloud messaging for getting [server key] of your firebase project.
+
+### Android
+
+for android version 13(API level 33) and above you need to ask user for notification.
+
+ add below code in your AndroidManifest.xml file
+
+```xml
+<manifest ...>
+        <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+        <application ...>
+        ...
+     </application>
+</manifest>
+```
+
+    Caution: If your app targets 12L or lower and the user taps Don't allow, even just once, they aren't prompted again until one of the following occurs:
+
+    The user uninstalls and reinstalls your app.
+    You update your app to target Android 13 or higher.
+
+
+### IOS
+
+* generate APNS key from your apple console and add APNs Authentication Key to your firebase project
+
+* for receving notification in ios you need to add following in your AppDelegate.swift file
+
+```swift
+import UIKit
+import Flutter
+import FirebaseMessaging
+import Firebase
+
+@UIApplicationMain
+@objc class AppDelegate: FlutterAppDelegate {
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+      FirebaseApp.configure()
+      if #available(iOS 10.0, *) {
+        // For iOS 10 display notification (sent via APNS)
+        UNUserNotificationCenter.current().delegate = self
+
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+          options: authOptions,
+          completionHandler: { _, _ in }
+        )
+      } else {
+        let settings: UIUserNotificationSettings =
+          UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        application.registerUserNotificationSettings(settings)
+      }
+
+      application.registerForRemoteNotifications()
+
+    
+    GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+  
+    
+    override func application(_ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+      Messaging.messaging().apnsToken = deviceToken;
+    }
+
+}
+
+```
+
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+* for receving FCM notification initialize `[FcmNotification]` in your main function
 
 ```dart
-const like = 'sample';
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
+}
+void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    FcmNotification.init(
+      backgroundHandler: backgroundHandler // this must be the top level function placed outside main fuction.
+      serverKey: 'Your server key');
 ```
 
-## Additional information
+* for Sending/Subscribing/Unsubscribing d2dNotifications
+  
+  ```dart
+    FcmNotification.instance.subscribeToD2dNotification('Topic'); // Subscribing topic
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+    FcmNotification.instance
+        .sendD2DNotification(to: topic, title: title, body: body);// Sending notification to a topic
+
+    FcmNotification.instance.unSubscribeD2dNotification('Topic');// unsubscbing topic
+  ```
