@@ -1,0 +1,21 @@
+name: aveonotification
+description: A new Flutter project.
+version: 0.0.1
+homepage: null
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  firebase_messaging: ^12.0.3
+  d2d_notifications: ^1.0.1+1
+  flutter:
+    sdk: flutter
+  flutter_local_notifications: ^9.8.0+1
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+flutter: null
