@@ -8,7 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  firebase_messaging: ^12.0.3
+  firebase_messaging: ^14.1.0
   d2d_notifications: ^1.0.1+1
   flutter:
     sdk: flutter
