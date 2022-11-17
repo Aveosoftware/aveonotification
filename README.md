@@ -29,13 +29,13 @@ AveoNotification package simplifys the receving FCM push notification and sendin
 
 ### Requirements
 
-* before yousing this package you need to create a firebase project
+* before using this package you need to create a firebase project
 
  * then go to Project Setting/Cloud messaging for getting [server key] of your firebase project.
 
 ### Android
 
-for android version 13(API level 33) and above you need to ask user for notification.
+for android version 13(API level 33) and above you need to ask user for notification permission.
 
  add below code in your AndroidManifest.xml file
 
@@ -130,5 +130,5 @@ void main() async {
     FcmNotification.instance
         .sendD2DNotification(to: topic, title: title, body: body);// Sending notification to a topic
 
-    FcmNotification.instance.unSubscribeD2dNotification('Topic');// unsubscbing topic
+    FcmNotification.instance.unSubscribeD2dNotification('Topic');// Unsubscribing topic
   ```
