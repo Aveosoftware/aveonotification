@@ -84,13 +84,13 @@ class FcmNotification {
   ///this will subscribe the user to the [topic] provided
   ///
   ///[topic] must match the following regular expression: [a-zA-Z0-9-_.~%]{1,900}.
-  subscribeToD2dNotification(String topic) {
-    FirebaseMessaging.instance.subscribeToTopic(topic);
+  Future subscribeToD2dNotification(String topic) async {
+    await FirebaseMessaging.instance.subscribeToTopic(topic);
   }
 
   ///unsubscribe [D2DNotification]
-  unSubscribeD2dNotification(String topic) {
-    FirebaseMessaging.instance.unsubscribeFromTopic(topic);
+  Future unSubscribeD2dNotification(String topic) async {
+    await FirebaseMessaging.instance.unsubscribeFromTopic(topic);
   }
 
   _getInitailmsg(Function(RemoteMessage? remoteMessage)? getIntial) {
