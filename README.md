@@ -1,6 +1,12 @@
 # AveoNotification
 
 AveoNotification package simplifys the receving FCM push notification and sending notification to a topic
+
+## What you save 
+ If you implement Receving and Sending FCM notification from the scratch it can take upto 20-30 hrs in total to setup and debug. AveoNotification will wrap-up this in just 5 mins!!!  
+  
+
+
  - [Features](#features)
  - [Getting started](#getting-started)
     - [Requirements](#requirements)
@@ -10,13 +16,13 @@ AveoNotification package simplifys the receving FCM push notification and sendin
 
 ## Features
 
-:>  recevies notifications  from firebase
+-  recevies notifications  from firebase
 
-:>  subscribe to topic for notification
+-  subscribe to topic for notification
 
-:>  send notification to a topic
+-  send notification to a topic
 
-:>  unsubscribe from a topic
+-  unsubscribe from a topic
 
 ## Getting started
 
@@ -125,3 +131,7 @@ void main() async {
 
     FcmNotification.instance.unSubscribeD2dNotification('Topic');// Unsubscribing topic
   ```
+
+  ## Where to use
+  - Need to receive notifications through FrebaseCustomMessaging(FCM)? cool By using Aveonotification you can start receiving notifications  by adding just one line!!
+  - Want to send notification to a topic from device? don't worry we got your back. you can send/receive notification from topic that too by adding one line!!!
